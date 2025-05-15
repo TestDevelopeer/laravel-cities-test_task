@@ -22,20 +22,20 @@
                     <a class="nav-link active" aria-current="page"
                        href="{{ route('index', ['city' => session('city.slug')]) }}">Home</a>
                 </li>
-                @if(session('city'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about', ['city' => session('city.slug')]) }}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('news', ['city' => session('city.slug')]) }}">News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('reset') }}">Reset City</a>
-                    </li>
-                @endif
+                {{--                @if(session('city'))--}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('about', ['city' => session('city.slug')]) }}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('news', ['city' => session('city.slug')]) }}">News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reset') }}">Reset City</a>
+                </li>
+                {{--                @endif--}}
             </ul>
 
-            {{ session('city.title') ?? 'Select City' }}
+            {{ session('city.title') ?? 'Select CitySlug' }}
         </div>
     </div>
 </nav>

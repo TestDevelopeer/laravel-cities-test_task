@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\CitySlug;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,7 +9,13 @@ Route::get('/reset', function () {
     return redirect()->route('index');
 })->name('reset');
 
-Route::prefix('{city?}')->group(function () {
+//Route::prefix('{city?}')->group(function () {
+//    Route::get('/', [MainController::class, 'index'])->name('index');
+//    Route::get('/about', [MainController::class, 'about'])->name('about');
+//    Route::get('/news', [MainController::class, 'news'])->name('news');
+//});
+
+Route::prefix(CitySlug::getSlug())->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('index');
     Route::get('/about', [MainController::class, 'about'])->name('about');
     Route::get('/news', [MainController::class, 'news'])->name('news');
