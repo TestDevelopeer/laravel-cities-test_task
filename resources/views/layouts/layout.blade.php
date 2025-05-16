@@ -20,14 +20,14 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page"
-                       href="{{ route('index', ['city' => session('city.slug')]) }}">Home</a>
+                       href="{{ city_url(route('index'), session('city.slug')) }}">Home</a>
                 </li>
                 {{--                @if(session('city'))--}}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('about', ['city' => session('city.slug')]) }}">About</a>
+                    <a class="nav-link" href="{{ city_url(route('about'), session('city.slug')) }}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('news', ['city' => session('city.slug')]) }}">News</a>
+                    <a class="nav-link" href="{{ city_url(route('news'), session('city.slug')) }}">News</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('reset') }}">Reset City</a>

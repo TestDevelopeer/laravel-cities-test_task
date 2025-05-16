@@ -16,7 +16,7 @@ class MainController extends Controller
 //            $city_data = CitySlug::where('slug', $city)->firstOrFail();
 //            session(['city' => $city_data]);
 //        }
-
+        
         $cities = City::all();
 
         return view('main.index', compact('cities'));
