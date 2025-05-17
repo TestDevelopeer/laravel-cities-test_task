@@ -32,6 +32,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('reset') }}">Reset City</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('cities') }}">Reload cities</a>
+                </li>
                 {{--                @endif--}}
             </ul>
 

@@ -24,7 +24,7 @@ class CityRedirect
         // который устанавливается в прошлом middleware CitySlug
         // Если он NULL значит город не был передан в url
         // и если при этом сессия с выбранным городом присутствует, то мы перенаправим на url с выбранным ранее городом
-        if ($request->attributes->get('cached_city') === null && session('city')) {
+        if ($city === null && session('city')) {
             // Использую свой helper city_url для генерации именных роутов с подстановкой города
             return redirect(city_url($request->path(), session('city.slug')));
         }

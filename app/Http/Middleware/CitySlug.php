@@ -19,23 +19,23 @@ class CitySlug
     {
         // Разбиваем строку url по /
         $segments = explode('/', trim($request->path(), '/'));
-        $city = null; // Город еще неизвестен
+        $city = false; // Город еще неизвестен
 
         // Если url не пустой и первый элемент после домена не пустой
         if (!empty($segments) && $segments[0] !== "") {
             $citySlug = $segments[0]; // Первым элементом всегда должен быть город, получаем его
-            $cacheKey = 'city_' . $citySlug; // Ключ кэша для запроса в бд
 
             // Получаем город из БД или кэша по первому элементу url строки и кэшируем запрос к БД
-            $city = Cache::remember($cacheKey, now()->addHours(24), function () use ($citySlug) {
-                return City::where('slug', $citySlug)->first(); // Ищем город в таблице по slug
-            });
+            $city = City::where('slug', $citySlug)->first(); // Ищем город в таблице по slug
+            if(!$city){
+                session()->forget('city');
+                //return redirect()->route('index');
+            }
         }
 
         // Если город по первому элементу был ранее найден в БД
         if ($city) {
             array_shift($segments); // Из разбитого массива url убираем первый элемент (наш город)
-            $request->attributes->set('city', $city);
             // Перезаписываем URI, уже без города
             $newUri = '/' . implode('/', $segments); // /london/about => /about
             $request->server->set('REQUEST_URI', $newUri); // устанавливаем новый url в request
@@ -44,7 +44,7 @@ class CitySlug
 
         // заносим город в атрибут request, чтобы middleware редиректа понимал,
         // был ли найден город в бд или нет
-        $request->attributes->set('cached_city', $city);
+        $request->attributes->set('city', $city);
 
         // Далее запрос уйдет в CityRedirect middleware, так, как в этом session('city') всегда возвращает NULL
         // поэтому не могу тут сделать редирект на ранее выбранный город, если url пришел без него
