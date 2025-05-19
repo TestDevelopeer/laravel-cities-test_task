@@ -22,7 +22,6 @@
                     <a class="nav-link active" aria-current="page"
                        href="{{ city_url(route('index'), session('city.slug')) }}">Home</a>
                 </li>
-                {{--                @if(session('city'))--}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ city_url(route('about'), session('city.slug')) }}">About</a>
                 </li>
@@ -35,7 +34,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cities') }}">Reload cities</a>
                 </li>
-                {{--                @endif--}}
             </ul>
 
             {{ session('city.title') ?? 'Select CitySlug' }}
