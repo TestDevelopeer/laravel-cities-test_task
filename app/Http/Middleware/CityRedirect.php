@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\City;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,14 +21,24 @@ class CityRedirect
         if ($city) {
             session(['city' => $city]); // заносим город в сессию, для view и для middleware редиректа
         }
-        // Проверяем пустой ли атрибут cached_city,
+        // Проверяем пустой ли атрибут city,
         // который устанавливается в прошлом middleware CitySlug
         // Если он NULL значит город не был передан в url
         // и если при этом сессия с выбранным городом присутствует, то мы перенаправим на url с выбранным ранее городом
         if ($city === null && session('city')) {
-            // Использую свой helper city_url для генерации именных роутов с подстановкой города
-            return redirect(city_url($request->path(), session('city.slug')));
+            if ($this->cityExists(session('city.slug'))) {
+                // Использую свой helper city_url для генерации именных роутов с подстановкой города
+                return redirect(city_url($request->path(), session('city.slug')));
+            }
+
+            session()->forget('city');
         }
+
         return $next($request);
+    }
+
+    public function cityExists($slug)
+    {
+        return City::where('slug', $slug)->exists();
     }
 }
