@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Models\City;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 class CitySlug
@@ -27,12 +26,7 @@ class CitySlug
 
             // Получаем город из БД или кэша по первому элементу url строки и кэшируем запрос к БД
             $city = City::where('slug', $citySlug)->first(); // Ищем город в таблице по slug
-            if(!$city){
-                session()->forget('city');
-                //return redirect()->route('index');
-            }
         }
-
         // Если город по первому элементу был ранее найден в БД
         if ($city) {
             array_shift($segments); // Из разбитого массива url убираем первый элемент (наш город)
