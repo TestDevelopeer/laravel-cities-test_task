@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -22,7 +21,7 @@ class CityController extends Controller
             'country' => self::COUNTRY,
         ])->json();
 
-        if($data['error']) {
+        if ($data['error']) {
             return $data['msg'];
         }
 
@@ -47,6 +46,8 @@ class CityController extends Controller
 
         $allCities = count($data['data']);
         $insertedCities = $allCities - $ignored;
+
+        session()->forget('city');
 
         return redirect()->route('index')->with(compact('allCities', 'insertedCities', 'ignored'));
     }
